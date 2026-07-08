@@ -15,6 +15,10 @@ const todayStr = () => new Date().toISOString().slice(0, 10);
 // Chủ đề thuộc nhóm Writing (tương thích dữ liệu cũ chưa có trường group)
 const isWriting = (t) => t.group === "writing" || /^writing-task/.test(t.id || "");
 
+// Overall IELTS = trung bình 4 kỹ năng, làm tròn tới 0.5 gần nhất (.25 lên .5, .75 lên band kế)
+const calcOverall = (s) =>
+  Math.round(((s.listening + s.reading + s.writing + s.speaking) / 4) * 2) / 2;
+
 const BANDS = [];
 for (let b = 4; b <= 9; b += 0.5) BANDS.push(b.toFixed(1));
 
@@ -191,14 +195,18 @@ function GoalsPanel({ settings, onSave, todayCount }) {
     return (
       <div className="goal-card">
         <h3 className="goal-title">Đặt mục tiêu</h3>
-        {[["overall", "Overall"], ["listening", "Listening"], ["reading", "Reading"], ["writing", "Writing"], ["speaking", "Speaking"]].map(band)}
+        <div className="goal-overall">
+          <b>{calcOverall(f).toFixed(1)}</b>
+          <span>overall — tự tính từ 4 kỹ năng</span>
+        </div>
+        {[["listening", "Listening"], ["reading", "Reading"], ["writing", "Writing"], ["speaking", "Speaking"]].map(band)}
         <label className="goal-row">
           <span>Thẻ mỗi ngày</span>
           <input type="number" min="1" max="500" className="finput gsel" value={f.dailyGoal}
             onChange={(e) => setF({ ...f, dailyGoal: Math.max(1, parseInt(e.target.value) || 1) })} />
         </label>
         <div className="form-actions">
-          <button className="btn primary small" onClick={() => { onSave(f); setEditing(false); }}>Lưu</button>
+          <button className="btn primary small" onClick={() => { onSave({ ...f, overall: calcOverall(f) }); setEditing(false); }}>Lưu</button>
           <button className="btn small" onClick={() => { setF(settings); setEditing(false); }}>Huỷ</button>
         </div>
       </div>
