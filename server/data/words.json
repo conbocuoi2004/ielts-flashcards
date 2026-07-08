@@ -772,7 +772,8 @@
             "a negligible difference"
           ]
         }
-      ]
+      ],
+      "group": "writing"
     },
     {
       "id": "writing-task2",
@@ -911,7 +912,8 @@
             "allocate funds to"
           ]
         }
-      ]
+      ],
+      "group": "writing"
     }
   ]
 }

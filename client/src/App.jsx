@@ -1,6 +1,23 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 const STORAGE_KEY = "ielts-flashcards-v1";
+const SETTINGS_KEY = "ielts-settings-v1";
+const DEFAULT_SETTINGS = {
+  overall: 6.5, listening: 6.5, reading: 6.5, writing: 6.0, speaking: 6.0,
+  dailyGoal: 20,
+  progress: { date: "", count: 0 },
+};
+function loadSettings() {
+  try { return { ...DEFAULT_SETTINGS, ...(JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {}) }; }
+  catch { return { ...DEFAULT_SETTINGS }; }
+}
+const todayStr = () => new Date().toISOString().slice(0, 10);
+// Chủ đề thuộc nhóm Writing (tương thích dữ liệu cũ chưa có trường group)
+const isWriting = (t) => t.group === "writing" || /^writing-task/.test(t.id || "");
+
+const BANDS = [];
+for (let b = 4; b <= 9; b += 0.5) BANDS.push(b.toFixed(1));
+
 // Khoảng cách ôn tập theo hộp Leitner (ngày): hộp 1 ôn ngay, hộp 5 = 14 ngày
 const INTERVALS = [0, 1, 3, 7, 14];
 const DAY = 24 * 60 * 60 * 1000;
@@ -153,10 +170,70 @@ function WordForm({ initial, topics, onSave, onCancel }) {
   );
 }
 
+/* ---------- Panel mục tiêu & lịch học ---------- */
+function GoalsPanel({ settings, onSave, todayCount }) {
+  const [editing, setEditing] = useState(false);
+  const [f, setF] = useState(settings);
+  useEffect(() => setF(settings), [settings]);
+  const pct = Math.min(100, Math.round((todayCount / Math.max(1, settings.dailyGoal)) * 100));
+  const reached = todayCount >= settings.dailyGoal;
+
+  if (editing) {
+    const band = (k) => (
+      <label className="goal-row" key={k[0]}>
+        <span>{k[1]}</span>
+        <select className="finput gsel" value={f[k[0]].toFixed(1)}
+          onChange={(e) => setF({ ...f, [k[0]]: parseFloat(e.target.value) })}>
+          {BANDS.map((b) => <option key={b}>{b}</option>)}
+        </select>
+      </label>
+    );
+    return (
+      <div className="goal-card">
+        <h3 className="goal-title">Đặt mục tiêu</h3>
+        {[["overall", "Overall"], ["listening", "Listening"], ["reading", "Reading"], ["writing", "Writing"], ["speaking", "Speaking"]].map(band)}
+        <label className="goal-row">
+          <span>Thẻ mỗi ngày</span>
+          <input type="number" min="1" max="500" className="finput gsel" value={f.dailyGoal}
+            onChange={(e) => setF({ ...f, dailyGoal: Math.max(1, parseInt(e.target.value) || 1) })} />
+        </label>
+        <div className="form-actions">
+          <button className="btn primary small" onClick={() => { onSave(f); setEditing(false); }}>Lưu</button>
+          <button className="btn small" onClick={() => { setF(settings); setEditing(false); }}>Huỷ</button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="goal-card">
+      <div className="goal-head">
+        <h3 className="goal-title">Mục tiêu</h3>
+        <button className="icon-btn" onClick={() => setEditing(true)}>Sửa</button>
+      </div>
+      <div className="goal-overall"><b>{settings.overall.toFixed(1)}</b><span>overall</span></div>
+      <div className="goal-skills">
+        {[["🎧 L", settings.listening], ["📖 R", settings.reading], ["✍️ W", settings.writing], ["🗣 S", settings.speaking]].map(([k, v]) => (
+          <div className="gskill" key={k}><span>{k}</span><b>{v.toFixed(1)}</b></div>
+        ))}
+      </div>
+      <div className="goal-daily">
+        <div className="gd-label">
+          <span>Hôm nay</span>
+          <span className={reached ? "gd-done" : ""}>{todayCount}/{settings.dailyGoal} thẻ {reached ? "🎉" : ""}</span>
+        </div>
+        <div className="gd-bar"><i style={{ width: pct + "%" }} /></div>
+        {!reached && <p className="gd-hint">còn {settings.dailyGoal - todayCount} thẻ nữa là đạt chỉ tiêu</p>}
+      </div>
+    </div>
+  );
+}
+
 /* ---------- Form thêm/sửa chủ đề ---------- */
 function TopicForm({ initial, onSave, onDelete, onCancel }) {
   const [icon, setIcon] = useState(initial?.icon || "📚");
   const [name, setName] = useState(initial?.name || "");
+  const [group, setGroup] = useState(initial?.group || "vocab");
   const ref = useRef(null);
   useEffect(() => ref.current?.focus(), []);
   return (
@@ -166,11 +243,15 @@ function TopicForm({ initial, onSave, onDelete, onCancel }) {
           onChange={(e) => setIcon(e.target.value)} aria-label="Biểu tượng emoji" />
         <input ref={ref} className="finput" value={name} placeholder="Tên chủ đề, vd: Crime"
           onChange={(e) => setName(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && name.trim() && onSave({ name: name.trim(), icon: icon.trim() || "📚" })} />
+          onKeyDown={(e) => e.key === "Enter" && name.trim() && onSave({ name: name.trim(), icon: icon.trim() || "📚", group })} />
       </div>
+      <select className="finput" value={group} onChange={(e) => setGroup(e.target.value)}>
+        <option value="vocab">Nhóm: Chủ đề thường</option>
+        <option value="writing">Nhóm: Từ vựng Writing</option>
+      </select>
       <div className="form-actions">
         <button className="btn primary small" disabled={!name.trim()}
-          onClick={() => onSave({ name: name.trim(), icon: icon.trim() || "📚" })}>Lưu</button>
+          onClick={() => onSave({ name: name.trim(), icon: icon.trim() || "📚", group })}>Lưu</button>
         <button className="btn small" onClick={onCancel}>Huỷ</button>
         {onDelete && <button className="btn small tdel" onClick={onDelete}>Xoá chủ đề</button>}
       </div>
@@ -268,6 +349,22 @@ export default function App() {
   const [editing, setEditing] = useState(null); // {topicId, uid}
   const [addingTopic, setAddingTopic] = useState(false);
   const [editingTopic, setEditingTopic] = useState(null); // topicId
+  const [settings, setSettings] = useState(loadSettings);
+
+  function saveSettings(next) {
+    setSettings(next);
+    try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(next)); } catch {}
+  }
+
+  function bumpProgress() {
+    setSettings((s) => {
+      const today = todayStr();
+      const count = (s.progress?.date === today ? s.progress.count : 0) + 1;
+      const next = { ...s, progress: { date: today, count } };
+      try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(next)); } catch {}
+      return next;
+    });
+  }
 
   useEffect(() => {
     const local = loadLocal();
@@ -306,6 +403,7 @@ export default function App() {
   }
 
   function rateWord(uid, topicId, remembered) {
+    bumpProgress();
     save({
       topics: data.topics.map((t) =>
         t.id !== topicId ? t : {
@@ -355,12 +453,12 @@ export default function App() {
 
 
   function addTopic(f) {
-    save({ topics: [...data.topics, { id: makeId(), name: f.name, icon: f.icon, words: [] }] });
+    save({ topics: [...data.topics, { id: makeId(), name: f.name, icon: f.icon, group: f.group || "vocab", words: [] }] });
     setAddingTopic(false);
   }
 
   function updateTopic(id, f) {
-    save({ topics: data.topics.map((t) => (t.id === id ? { ...t, name: f.name, icon: f.icon } : t)) });
+    save({ topics: data.topics.map((t) => (t.id === id ? { ...t, name: f.name, icon: f.icon, group: f.group || "vocab" } : t)) });
     setEditingTopic(null);
   }
 
@@ -428,8 +526,35 @@ export default function App() {
   }
 
   // ----- Trang chính -----
+  const vocabTopics = data.topics.filter((t) => !isWriting(t));
+  const writingTopics = data.topics.filter(isWriting);
+  const todayCount = settings.progress?.date === todayStr() ? settings.progress.count : 0;
+
+  const topicCard = (t) => {
+    if (editingTopic === t.id) {
+      return (
+        <TopicForm key={t.id} initial={{ ...t, group: isWriting(t) ? "writing" : "vocab" }}
+          onSave={(f) => updateTopic(t.id, f)}
+          onDelete={() => deleteTopic(t.id)}
+          onCancel={() => setEditingTopic(null)} />
+      );
+    }
+    const due = dueWords.filter((w) => w.topicId === t.id).length;
+    return (
+      <button className={`topic-card ${isWriting(t) ? "wt" : ""}`} key={t.id} onClick={() => startSession(t.id)}>
+        <span className="topic-icon">{t.icon}</span>
+        <span className="topic-name">{t.name}</span>
+        <span className="topic-meta">{t.words.length} từ{due ? ` · ${due} đến hạn` : ""}</span>
+        {due > 0 && <span className="due-dot">{due}</span>}
+        <span className="topic-edit" role="button" tabIndex={0} aria-label="Sửa chủ đề"
+          onClick={(e) => { e.stopPropagation(); setEditingTopic(t.id); }}
+          onKeyDown={(e) => { if (e.key === "Enter") { e.stopPropagation(); setEditingTopic(t.id); } }}>✎</span>
+      </button>
+    );
+  };
+
   return (
-    <div className="wrap">
+    <div className="wrap wide">
       <header className="home-head">
         <h1 className="logo">IELTS<span>Flashcards</span></h1>
         <div className="head-actions">
@@ -438,49 +563,44 @@ export default function App() {
         </div>
       </header>
 
-      <div className="stats">
-        <div className="stat"><b>{allWords.length}</b><span>tổng số từ</span></div>
-        <div className="stat due"><b>{dueWords.length}</b><span>đến hạn ôn</span></div>
-        <div className="stat"><b>{learned}</b><span>đã thuộc kỹ</span></div>
-      </div>
+      <div className="home-grid">
+        <div className="home-main">
+          <div className="stats">
+            <div className="stat"><b>{allWords.length}</b><span>tổng số từ</span></div>
+            <div className="stat due"><b>{dueWords.length}</b><span>đến hạn ôn</span></div>
+            <div className="stat"><b>{learned}</b><span>đã thuộc kỹ</span></div>
+          </div>
 
-      <button className="study-all" onClick={() => startSession(null)}>
-        ▶ Học ngay {dueWords.length ? `(${dueWords.length} thẻ đến hạn)` : "(ôn lại tất cả)"}
-      </button>
-
-      <h2 className="section-title">Theo chủ đề</h2>
-      <div className="topic-grid">
-        {data.topics.map((t) => {
-          if (editingTopic === t.id) {
-            return (
-              <TopicForm key={t.id} initial={t}
-                onSave={(f) => updateTopic(t.id, f)}
-                onDelete={() => deleteTopic(t.id)}
-                onCancel={() => setEditingTopic(null)} />
-            );
-          }
-          const due = dueWords.filter((w) => w.topicId === t.id).length;
-          return (
-            <button className="topic-card" key={t.id} onClick={() => startSession(t.id)}>
-              <span className="topic-icon">{t.icon}</span>
-              <span className="topic-name">{t.name}</span>
-              <span className="topic-meta">{t.words.length} từ{due ? ` · ${due} đến hạn` : ""}</span>
-              {due > 0 && <span className="due-dot">{due}</span>}
-              <span className="topic-edit" role="button" tabIndex={0} aria-label="Sửa chủ đề"
-                onClick={(e) => { e.stopPropagation(); setEditingTopic(t.id); }}
-                onKeyDown={(e) => { if (e.key === "Enter") { e.stopPropagation(); setEditingTopic(t.id); } }}>✎</span>
-            </button>
-          );
-        })}
-        {addingTopic ? (
-          <TopicForm onSave={addTopic} onCancel={() => setAddingTopic(false)} />
-        ) : (
-          <button className="topic-card topic-add" onClick={() => setAddingTopic(true)}>
-            <span className="topic-icon">＋</span>
-            <span className="topic-name">Thêm chủ đề</span>
-            <span className="topic-meta">tạo bộ từ riêng của bạn</span>
+          <button className="study-all" onClick={() => startSession(null)}>
+            ▶ Học ngay {dueWords.length ? `(${dueWords.length} thẻ đến hạn)` : "(ôn lại tất cả)"}
           </button>
-        )}
+
+          <h2 className="section-title">Theo chủ đề</h2>
+          <div className="topic-grid">
+            {vocabTopics.map(topicCard)}
+            {addingTopic ? (
+              <TopicForm onSave={addTopic} onCancel={() => setAddingTopic(false)} />
+            ) : (
+              <button className="topic-card topic-add" onClick={() => setAddingTopic(true)}>
+                <span className="topic-icon">＋</span>
+                <span className="topic-name">Thêm chủ đề</span>
+                <span className="topic-meta">tạo bộ từ riêng của bạn</span>
+              </button>
+            )}
+          </div>
+
+          <h2 className="section-title wt-title">✍️ Từ vựng Writing</h2>
+          <div className="topic-grid">
+            {writingTopics.map(topicCard)}
+            {writingTopics.length === 0 && (
+              <p className="empty">Chưa có bộ Writing nào — thêm chủ đề mới và chọn nhóm "Từ vựng Writing".</p>
+            )}
+          </div>
+        </div>
+
+        <aside className="home-side">
+          <GoalsPanel settings={settings} onSave={saveSettings} todayCount={todayCount} />
+        </aside>
       </div>
 
       <p className="foot-note">Tiến độ học lưu trên máy bạn · lặp lại ngắt quãng 1→3→7→14 ngày</p>

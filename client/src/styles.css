@@ -261,3 +261,60 @@ select.finput { cursor: pointer; }
   border-radius: 5px; padding: 3px 9px;
   box-decoration-break: clone;
 }
+
+/* ===== Layout rộng 2 cột cho trang chính ===== */
+.wrap.wide { max-width: 1040px; }
+.home-grid { display: grid; grid-template-columns: 1fr 300px; gap: 24px; align-items: start; }
+.home-side { position: sticky; top: 24px; }
+
+/* ===== Khu Writing ===== */
+.wt-title { margin-top: 26px; }
+.topic-card.wt {
+  background: linear-gradient(135deg, rgba(255,210,63,0.10), var(--navy2) 55%);
+  border-color: rgba(255,210,63,0.35);
+}
+.topic-card.wt:hover { border-color: var(--gold); }
+.topic-card.wt .topic-name { color: var(--gold); }
+
+/* ===== Panel mục tiêu ===== */
+.goal-card {
+  background: var(--navy2); border: 1px solid var(--navy3);
+  border-radius: 14px; padding: 18px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.goal-head { display: flex; align-items: center; justify-content: space-between; }
+.goal-title { font-family: var(--disp); font-size: 15px; margin: 0; color: #9aa3c0; font-weight: 500; }
+
+.goal-overall { text-align: center; }
+.goal-overall b {
+  font-family: var(--disp); font-size: 52px; line-height: 1;
+  color: var(--gold); display: block; letter-spacing: -2px;
+}
+.goal-overall span { font-size: 12px; color: #9aa3c0; text-transform: uppercase; letter-spacing: 2px; }
+
+.goal-skills { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.gskill {
+  background: var(--navy); border: 1px solid var(--navy3); border-radius: 9px;
+  padding: 8px 4px; text-align: center;
+}
+.gskill span { display: block; font-size: 11px; color: #9aa3c0; margin-bottom: 3px; }
+.gskill b { font-family: var(--disp); font-size: 16px; }
+
+.goal-daily { border-top: 1px dashed var(--navy3); padding-top: 12px; }
+.gd-label { display: flex; justify-content: space-between; font-size: 12.5px; color: #9aa3c0; margin-bottom: 7px; }
+.gd-label .gd-done { color: var(--mint); font-weight: 600; }
+.gd-bar { height: 9px; background: var(--navy); border-radius: 5px; overflow: hidden; }
+.gd-bar i {
+  display: block; height: 100%;
+  background: linear-gradient(90deg, var(--coral), var(--gold));
+  border-radius: 5px; transition: width 0.4s ease;
+}
+.gd-hint { font-size: 11.5px; color: #6b7494; margin: 7px 0 0; }
+
+.goal-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 13.5px; color: #cfd4e6; }
+.gsel { max-width: 92px; padding: 7px 9px; font-size: 13.5px; background: var(--navy); }
+
+@media (max-width: 860px) {
+  .home-grid { grid-template-columns: 1fr; }
+  .home-side { position: static; order: -1; } /* mobile: mục tiêu lên đầu */
+}
