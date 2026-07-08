@@ -65,6 +65,7 @@ function WordForm({ initial, topics, onSave, onCancel }) {
     meaning: initial?.meaning || "",
     example: initial?.example || "",
     audio: initial?.audio || "",
+    colls: (initial?.collocations || []).join(", "),
     topicId: initial?.topicId || topics[0]?.id,
   });
   const [looking, setLooking] = useState(false);
@@ -138,6 +139,7 @@ function WordForm({ initial, topics, onSave, onCancel }) {
       </div>
       <input className="finput" value={f.meaning} onChange={set("meaning")} placeholder="Nghĩa (tiếng Việt hoặc định nghĩa đã chọn ở trên)" />
       <input className="finput" value={f.example} onChange={set("example")} placeholder="Câu ví dụ tiếng Anh (không bắt buộc)" />
+      <input className="finput" value={f.colls} onChange={set("colls")} placeholder="Collocations, cách nhau bằng dấu phẩy (vd: pose a threat to, pose a challenge)" />
       {!initial && (
         <select className="finput" value={f.topicId} onChange={set("topicId")}>
           {topics.map((t) => <option key={t.id} value={t.id}>{t.icon} {t.name}</option>)}
@@ -236,6 +238,11 @@ function StudySession({ words, onRate, onExit }) {
           </div>
           <div className="card-face card-back">
             <h3 className="card-meaning">{card.meaning}</h3>
+            {card.collocations?.length > 0 && (
+              <div className="colls">
+                {card.collocations.map((c) => <span className="coll-chip" key={c}>{c}</span>)}
+              </div>
+            )}
             {card.example && <p className="card-example">“{card.example}”</p>}
             <span className="card-hint">hộp {card.box}/5</span>
           </div>
@@ -319,7 +326,7 @@ export default function App() {
       topics: data.topics.map((t) =>
         t.id !== f.topicId ? t : {
           ...t,
-          words: [{ word: f.word.trim(), type: f.type, ipa: f.ipa.trim(), meaning: f.meaning.trim(), example: f.example.trim(), audio: f.audio || "", uid: makeId(), box: 1, due: Date.now() }, ...t.words],
+          words: [{ word: f.word.trim(), type: f.type, ipa: f.ipa.trim(), meaning: f.meaning.trim(), example: f.example.trim(), audio: f.audio || "", collocations: (f.colls || "").split(",").map((s) => s.trim()).filter(Boolean), uid: makeId(), box: 1, due: Date.now() }, ...t.words],
         }
       ),
     });
@@ -331,7 +338,7 @@ export default function App() {
       topics: data.topics.map((t) =>
         t.id !== topicId ? t : {
           ...t,
-          words: t.words.map((w) => (w.uid === uid ? { ...w, word: f.word.trim(), type: f.type, ipa: f.ipa.trim(), meaning: f.meaning.trim(), example: f.example.trim(), audio: f.audio || w.audio || "" } : w)),
+          words: t.words.map((w) => (w.uid === uid ? { ...w, word: f.word.trim(), type: f.type, ipa: f.ipa.trim(), meaning: f.meaning.trim(), example: f.example.trim(), audio: f.audio || w.audio || "", collocations: (f.colls || "").split(",").map((s) => s.trim()).filter(Boolean) } : w)),
         }
       ),
     });

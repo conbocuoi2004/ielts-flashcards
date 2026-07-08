@@ -5,15 +5,105 @@
       "name": "Education",
       "icon": "🎓",
       "words": [
-        { "word": "curriculum", "type": "n", "ipa": "/kəˈrɪkjələm/", "meaning": "chương trình giảng dạy", "example": "The school has updated its curriculum to include coding classes." },
-        { "word": "compulsory", "type": "adj", "ipa": "/kəmˈpʌlsəri/", "meaning": "bắt buộc", "example": "Education is compulsory for children between 6 and 15 in Vietnam." },
-        { "word": "literacy", "type": "n", "ipa": "/ˈlɪtərəsi/", "meaning": "khả năng đọc viết", "example": "The country's literacy rate has risen sharply over the past decade." },
-        { "word": "scholarship", "type": "n", "ipa": "/ˈskɒləʃɪp/", "meaning": "học bổng", "example": "She won a full scholarship to study abroad." },
-        { "word": "vocational", "type": "adj", "ipa": "/vəʊˈkeɪʃənl/", "meaning": "thuộc về dạy nghề", "example": "Vocational training gives students practical skills for specific jobs." },
-        { "word": "acquire", "type": "v", "ipa": "/əˈkwaɪə(r)/", "meaning": "tiếp thu, đạt được (kiến thức, kỹ năng)", "example": "Children acquire language skills remarkably quickly." },
-        { "word": "rote learning", "type": "n", "ipa": "/rəʊt ˈlɜːnɪŋ/", "meaning": "học vẹt, học thuộc lòng", "example": "Critics argue that rote learning discourages creative thinking." },
-        { "word": "peer pressure", "type": "n", "ipa": "/pɪə ˈpreʃə(r)/", "meaning": "áp lực từ bạn bè đồng trang lứa", "example": "Peer pressure can strongly influence teenagers' behaviour at school." },
-        { "word": "drop out", "type": "v", "ipa": "/drɒp aʊt/", "meaning": "bỏ học giữa chừng", "example": "He dropped out of university to start his own business." }
+        {
+          "word": "curriculum",
+          "type": "n",
+          "ipa": "/kəˈrɪkjələm/",
+          "meaning": "chương trình giảng dạy",
+          "example": "The school has updated its curriculum to include coding classes.",
+          "collocations": [
+            "design a curriculum",
+            "the national curriculum"
+          ]
+        },
+        {
+          "word": "compulsory",
+          "type": "adj",
+          "ipa": "/kəmˈpʌlsəri/",
+          "meaning": "bắt buộc",
+          "example": "Education is compulsory for children between 6 and 15 in Vietnam.",
+          "collocations": [
+            "compulsory education",
+            "make something compulsory"
+          ]
+        },
+        {
+          "word": "literacy",
+          "type": "n",
+          "ipa": "/ˈlɪtərəsi/",
+          "meaning": "khả năng đọc viết",
+          "example": "The country's literacy rate has risen sharply over the past decade.",
+          "collocations": [
+            "literacy rate",
+            "digital literacy"
+          ]
+        },
+        {
+          "word": "scholarship",
+          "type": "n",
+          "ipa": "/ˈskɒləʃɪp/",
+          "meaning": "học bổng",
+          "example": "She won a full scholarship to study abroad.",
+          "collocations": [
+            "win a scholarship",
+            "a full scholarship"
+          ]
+        },
+        {
+          "word": "vocational",
+          "type": "adj",
+          "ipa": "/vəʊˈkeɪʃənl/",
+          "meaning": "thuộc về dạy nghề",
+          "example": "Vocational training gives students practical skills for specific jobs.",
+          "collocations": [
+            "vocational training",
+            "vocational skills"
+          ]
+        },
+        {
+          "word": "acquire",
+          "type": "v",
+          "ipa": "/əˈkwaɪə(r)/",
+          "meaning": "tiếp thu, đạt được (kiến thức, kỹ năng)",
+          "example": "Children acquire language skills remarkably quickly.",
+          "collocations": [
+            "acquire knowledge",
+            "acquire a skill"
+          ]
+        },
+        {
+          "word": "rote learning",
+          "type": "n",
+          "ipa": "/rəʊt ˈlɜːnɪŋ/",
+          "meaning": "học vẹt, học thuộc lòng",
+          "example": "Critics argue that rote learning discourages creative thinking.",
+          "collocations": [
+            "rely on rote learning",
+            "encourage rote learning"
+          ]
+        },
+        {
+          "word": "peer pressure",
+          "type": "n",
+          "ipa": "/pɪə ˈpreʃə(r)/",
+          "meaning": "áp lực từ bạn bè đồng trang lứa",
+          "example": "Peer pressure can strongly influence teenagers' behaviour at school.",
+          "collocations": [
+            "give in to peer pressure",
+            "resist peer pressure"
+          ]
+        },
+        {
+          "word": "drop out",
+          "type": "v",
+          "ipa": "/drɒp aʊt/",
+          "meaning": "bỏ học giữa chừng",
+          "example": "He dropped out of university to start his own business.",
+          "collocations": [
+            "drop out of school",
+            "a high dropout rate"
+          ]
+        }
       ]
     },
     {
@@ -21,15 +111,105 @@
       "name": "Environment",
       "icon": "🌱",
       "words": [
-        { "word": "sustainable", "type": "adj", "ipa": "/səˈsteɪnəbl/", "meaning": "bền vững", "example": "We need to switch to more sustainable sources of energy." },
-        { "word": "deforestation", "type": "n", "ipa": "/ˌdiːˌfɒrɪˈsteɪʃn/", "meaning": "nạn phá rừng", "example": "Deforestation is destroying the habitats of countless species." },
-        { "word": "emission", "type": "n", "ipa": "/ɪˈmɪʃn/", "meaning": "khí thải", "example": "The government plans to cut carbon emissions by 40% by 2030." },
-        { "word": "biodiversity", "type": "n", "ipa": "/ˌbaɪəʊdaɪˈvɜːsəti/", "meaning": "đa dạng sinh học", "example": "Coral reefs support an incredible level of biodiversity." },
-        { "word": "renewable", "type": "adj", "ipa": "/rɪˈnjuːəbl/", "meaning": "có thể tái tạo", "example": "Solar and wind power are renewable energy sources." },
-        { "word": "contaminate", "type": "v", "ipa": "/kənˈtæmɪneɪt/", "meaning": "làm ô nhiễm, nhiễm bẩn", "example": "Industrial waste has contaminated the river." },
-        { "word": "endangered", "type": "adj", "ipa": "/ɪnˈdeɪndʒəd/", "meaning": "có nguy cơ tuyệt chủng", "example": "The saola is one of the world's most endangered mammals." },
-        { "word": "carbon footprint", "type": "n", "ipa": "/ˌkɑːbən ˈfʊtprɪnt/", "meaning": "lượng khí thải carbon (của một người/tổ chức)", "example": "Cycling to work is a simple way to reduce your carbon footprint." },
-        { "word": "landfill", "type": "n", "ipa": "/ˈlændfɪl/", "meaning": "bãi chôn lấp rác", "example": "Most plastic waste still ends up in landfill." }
+        {
+          "word": "sustainable",
+          "type": "adj",
+          "ipa": "/səˈsteɪnəbl/",
+          "meaning": "bền vững",
+          "example": "We need to switch to more sustainable sources of energy.",
+          "collocations": [
+            "sustainable development",
+            "environmentally sustainable"
+          ]
+        },
+        {
+          "word": "deforestation",
+          "type": "n",
+          "ipa": "/ˌdiːˌfɒrɪˈsteɪʃn/",
+          "meaning": "nạn phá rừng",
+          "example": "Deforestation is destroying the habitats of countless species.",
+          "collocations": [
+            "combat deforestation",
+            "widespread deforestation"
+          ]
+        },
+        {
+          "word": "emission",
+          "type": "n",
+          "ipa": "/ɪˈmɪʃn/",
+          "meaning": "khí thải",
+          "example": "The government plans to cut carbon emissions by 40% by 2030.",
+          "collocations": [
+            "carbon emissions",
+            "cut/reduce emissions"
+          ]
+        },
+        {
+          "word": "biodiversity",
+          "type": "n",
+          "ipa": "/ˌbaɪəʊdaɪˈvɜːsəti/",
+          "meaning": "đa dạng sinh học",
+          "example": "Coral reefs support an incredible level of biodiversity.",
+          "collocations": [
+            "protect biodiversity",
+            "a loss of biodiversity"
+          ]
+        },
+        {
+          "word": "renewable",
+          "type": "adj",
+          "ipa": "/rɪˈnjuːəbl/",
+          "meaning": "có thể tái tạo",
+          "example": "Solar and wind power are renewable energy sources.",
+          "collocations": [
+            "renewable energy",
+            "renewable resources"
+          ]
+        },
+        {
+          "word": "contaminate",
+          "type": "v",
+          "ipa": "/kənˈtæmɪneɪt/",
+          "meaning": "làm ô nhiễm, nhiễm bẩn",
+          "example": "Industrial waste has contaminated the river.",
+          "collocations": [
+            "contaminate water supplies",
+            "contaminated soil"
+          ]
+        },
+        {
+          "word": "endangered",
+          "type": "adj",
+          "ipa": "/ɪnˈdeɪndʒəd/",
+          "meaning": "có nguy cơ tuyệt chủng",
+          "example": "The saola is one of the world's most endangered mammals.",
+          "collocations": [
+            "endangered species",
+            "critically endangered"
+          ]
+        },
+        {
+          "word": "carbon footprint",
+          "type": "n",
+          "ipa": "/ˌkɑːbən ˈfʊtprɪnt/",
+          "meaning": "lượng khí thải carbon (của một người/tổ chức)",
+          "example": "Cycling to work is a simple way to reduce your carbon footprint.",
+          "collocations": [
+            "reduce your carbon footprint",
+            "a large carbon footprint"
+          ]
+        },
+        {
+          "word": "landfill",
+          "type": "n",
+          "ipa": "/ˈlændfɪl/",
+          "meaning": "bãi chôn lấp rác",
+          "example": "Most plastic waste still ends up in landfill.",
+          "collocations": [
+            "end up in landfill",
+            "a landfill site"
+          ]
+        }
       ]
     },
     {
@@ -37,15 +217,105 @@
       "name": "Technology",
       "icon": "🤖",
       "words": [
-        { "word": "breakthrough", "type": "n", "ipa": "/ˈbreɪkθruː/", "meaning": "bước đột phá", "example": "The discovery was a major breakthrough in cancer research." },
-        { "word": "obsolete", "type": "adj", "ipa": "/ˈɒbsəliːt/", "meaning": "lỗi thời, không còn dùng nữa", "example": "Many jobs may become obsolete because of automation." },
-        { "word": "cutting-edge", "type": "adj", "ipa": "/ˌkʌtɪŋ ˈedʒ/", "meaning": "tiên tiến nhất, hiện đại nhất", "example": "The lab is equipped with cutting-edge technology." },
-        { "word": "automation", "type": "n", "ipa": "/ˌɔːtəˈmeɪʃn/", "meaning": "tự động hoá", "example": "Automation has transformed the manufacturing industry." },
-        { "word": "surveillance", "type": "n", "ipa": "/sɜːˈveɪləns/", "meaning": "sự giám sát, theo dõi", "example": "Some people worry about the growth of government surveillance." },
-        { "word": "digital divide", "type": "n", "ipa": "/ˌdɪdʒɪtl dɪˈvaɪd/", "meaning": "khoảng cách số (giữa người có và không có công nghệ)", "example": "The digital divide leaves rural students at a disadvantage." },
-        { "word": "user-friendly", "type": "adj", "ipa": "/ˌjuːzə ˈfrendli/", "meaning": "dễ sử dụng", "example": "The new app has a very user-friendly interface." },
-        { "word": "innovation", "type": "n", "ipa": "/ˌɪnəˈveɪʃn/", "meaning": "sự đổi mới, sáng kiến", "example": "Innovation is the key driver of economic growth." },
-        { "word": "addictive", "type": "adj", "ipa": "/əˈdɪktɪv/", "meaning": "gây nghiện", "example": "Social media platforms are designed to be addictive." }
+        {
+          "word": "breakthrough",
+          "type": "n",
+          "ipa": "/ˈbreɪkθruː/",
+          "meaning": "bước đột phá",
+          "example": "The discovery was a major breakthrough in cancer research.",
+          "collocations": [
+            "a major breakthrough",
+            "make a breakthrough"
+          ]
+        },
+        {
+          "word": "obsolete",
+          "type": "adj",
+          "ipa": "/ˈɒbsəliːt/",
+          "meaning": "lỗi thời, không còn dùng nữa",
+          "example": "Many jobs may become obsolete because of automation.",
+          "collocations": [
+            "become obsolete",
+            "render something obsolete"
+          ]
+        },
+        {
+          "word": "cutting-edge",
+          "type": "adj",
+          "ipa": "/ˌkʌtɪŋ ˈedʒ/",
+          "meaning": "tiên tiến nhất, hiện đại nhất",
+          "example": "The lab is equipped with cutting-edge technology.",
+          "collocations": [
+            "cutting-edge technology",
+            "cutting-edge research"
+          ]
+        },
+        {
+          "word": "automation",
+          "type": "n",
+          "ipa": "/ˌɔːtəˈmeɪʃn/",
+          "meaning": "tự động hoá",
+          "example": "Automation has transformed the manufacturing industry.",
+          "collocations": [
+            "increased automation",
+            "factory automation"
+          ]
+        },
+        {
+          "word": "surveillance",
+          "type": "n",
+          "ipa": "/sɜːˈveɪləns/",
+          "meaning": "sự giám sát, theo dõi",
+          "example": "Some people worry about the growth of government surveillance.",
+          "collocations": [
+            "mass surveillance",
+            "under surveillance"
+          ]
+        },
+        {
+          "word": "digital divide",
+          "type": "n",
+          "ipa": "/ˌdɪdʒɪtl dɪˈvaɪd/",
+          "meaning": "khoảng cách số (giữa người có và không có công nghệ)",
+          "example": "The digital divide leaves rural students at a disadvantage.",
+          "collocations": [
+            "bridge the digital divide",
+            "widen the digital divide"
+          ]
+        },
+        {
+          "word": "user-friendly",
+          "type": "adj",
+          "ipa": "/ˌjuːzə ˈfrendli/",
+          "meaning": "dễ sử dụng",
+          "example": "The new app has a very user-friendly interface.",
+          "collocations": [
+            "a user-friendly interface",
+            "user-friendly design"
+          ]
+        },
+        {
+          "word": "innovation",
+          "type": "n",
+          "ipa": "/ˌɪnəˈveɪʃn/",
+          "meaning": "sự đổi mới, sáng kiến",
+          "example": "Innovation is the key driver of economic growth.",
+          "collocations": [
+            "technological innovation",
+            "drive innovation"
+          ]
+        },
+        {
+          "word": "addictive",
+          "type": "adj",
+          "ipa": "/əˈdɪktɪv/",
+          "meaning": "gây nghiện",
+          "example": "Social media platforms are designed to be addictive.",
+          "collocations": [
+            "highly addictive",
+            "addictive behaviour"
+          ]
+        }
       ]
     },
     {
@@ -53,15 +323,105 @@
       "name": "Health",
       "icon": "🩺",
       "words": [
-        { "word": "sedentary", "type": "adj", "ipa": "/ˈsedntri/", "meaning": "ít vận động (lối sống)", "example": "A sedentary lifestyle increases the risk of heart disease." },
-        { "word": "obesity", "type": "n", "ipa": "/əʊˈbiːsəti/", "meaning": "béo phì", "example": "Childhood obesity has become a serious public health issue." },
-        { "word": "preventive", "type": "adj", "ipa": "/prɪˈventɪv/", "meaning": "mang tính phòng ngừa", "example": "Preventive healthcare is cheaper than treating diseases." },
-        { "word": "well-being", "type": "n", "ipa": "/ˌwel ˈbiːɪŋ/", "meaning": "sức khoẻ tổng thể, hạnh phúc", "example": "Regular exercise improves both physical and mental well-being." },
-        { "word": "epidemic", "type": "n", "ipa": "/ˌepɪˈdemɪk/", "meaning": "dịch bệnh", "example": "The city struggled to contain the flu epidemic." },
-        { "word": "nutritious", "type": "adj", "ipa": "/njuˈtrɪʃəs/", "meaning": "giàu dinh dưỡng", "example": "Parents should provide children with nutritious meals." },
-        { "word": "life expectancy", "type": "n", "ipa": "/ˈlaɪf ɪkˌspektənsi/", "meaning": "tuổi thọ trung bình", "example": "Life expectancy has increased significantly thanks to modern medicine." },
-        { "word": "chronic", "type": "adj", "ipa": "/ˈkrɒnɪk/", "meaning": "mãn tính", "example": "Diabetes is a chronic disease that requires lifelong management." },
-        { "word": "immune system", "type": "n", "ipa": "/ɪˈmjuːn ˌsɪstəm/", "meaning": "hệ miễn dịch", "example": "Lack of sleep can weaken your immune system." }
+        {
+          "word": "sedentary",
+          "type": "adj",
+          "ipa": "/ˈsedntri/",
+          "meaning": "ít vận động (lối sống)",
+          "example": "A sedentary lifestyle increases the risk of heart disease.",
+          "collocations": [
+            "a sedentary lifestyle",
+            "sedentary work"
+          ]
+        },
+        {
+          "word": "obesity",
+          "type": "n",
+          "ipa": "/əʊˈbiːsəti/",
+          "meaning": "béo phì",
+          "example": "Childhood obesity has become a serious public health issue.",
+          "collocations": [
+            "childhood obesity",
+            "tackle obesity"
+          ]
+        },
+        {
+          "word": "preventive",
+          "type": "adj",
+          "ipa": "/prɪˈventɪv/",
+          "meaning": "mang tính phòng ngừa",
+          "example": "Preventive healthcare is cheaper than treating diseases.",
+          "collocations": [
+            "preventive measures",
+            "preventive healthcare"
+          ]
+        },
+        {
+          "word": "well-being",
+          "type": "n",
+          "ipa": "/ˌwel ˈbiːɪŋ/",
+          "meaning": "sức khoẻ tổng thể, hạnh phúc",
+          "example": "Regular exercise improves both physical and mental well-being.",
+          "collocations": [
+            "mental well-being",
+            "promote well-being"
+          ]
+        },
+        {
+          "word": "epidemic",
+          "type": "n",
+          "ipa": "/ˌepɪˈdemɪk/",
+          "meaning": "dịch bệnh",
+          "example": "The city struggled to contain the flu epidemic.",
+          "collocations": [
+            "contain an epidemic",
+            "an obesity epidemic"
+          ]
+        },
+        {
+          "word": "nutritious",
+          "type": "adj",
+          "ipa": "/njuˈtrɪʃəs/",
+          "meaning": "giàu dinh dưỡng",
+          "example": "Parents should provide children with nutritious meals.",
+          "collocations": [
+            "a nutritious diet",
+            "nutritious meals"
+          ]
+        },
+        {
+          "word": "life expectancy",
+          "type": "n",
+          "ipa": "/ˈlaɪf ɪkˌspektənsi/",
+          "meaning": "tuổi thọ trung bình",
+          "example": "Life expectancy has increased significantly thanks to modern medicine.",
+          "collocations": [
+            "average life expectancy",
+            "increase life expectancy"
+          ]
+        },
+        {
+          "word": "chronic",
+          "type": "adj",
+          "ipa": "/ˈkrɒnɪk/",
+          "meaning": "mãn tính",
+          "example": "Diabetes is a chronic disease that requires lifelong management.",
+          "collocations": [
+            "chronic disease",
+            "chronic pain"
+          ]
+        },
+        {
+          "word": "immune system",
+          "type": "n",
+          "ipa": "/ɪˈmjuːn ˌsɪstəm/",
+          "meaning": "hệ miễn dịch",
+          "example": "Lack of sleep can weaken your immune system.",
+          "collocations": [
+            "boost the immune system",
+            "weaken the immune system"
+          ]
+        }
       ]
     },
     {
@@ -69,15 +429,105 @@
       "name": "Work & Money",
       "icon": "💼",
       "words": [
-        { "word": "remuneration", "type": "n", "ipa": "/rɪˌmjuːnəˈreɪʃn/", "meaning": "thù lao, tiền công", "example": "The job offers excellent remuneration and benefits." },
-        { "word": "work-life balance", "type": "n", "ipa": "/ˌwɜːk laɪf ˈbæləns/", "meaning": "cân bằng công việc và cuộc sống", "example": "Flexible hours help employees maintain a healthy work-life balance." },
-        { "word": "redundant", "type": "adj", "ipa": "/rɪˈdʌndənt/", "meaning": "bị sa thải (do dư thừa nhân sự)", "example": "Hundreds of workers were made redundant when the factory closed." },
-        { "word": "entrepreneur", "type": "n", "ipa": "/ˌɒntrəprəˈnɜː(r)/", "meaning": "doanh nhân khởi nghiệp", "example": "Young entrepreneurs are driving the startup scene in Hanoi." },
-        { "word": "inflation", "type": "n", "ipa": "/ɪnˈfleɪʃn/", "meaning": "lạm phát", "example": "Rising inflation has reduced people's purchasing power." },
-        { "word": "burnout", "type": "n", "ipa": "/ˈbɜːnaʊt/", "meaning": "kiệt sức vì công việc", "example": "Long working hours often lead to employee burnout." },
-        { "word": "telecommute", "type": "v", "ipa": "/ˈtelikəmjuːt/", "meaning": "làm việc từ xa", "example": "More companies now allow staff to telecommute several days a week." },
-        { "word": "disposable income", "type": "n", "ipa": "/dɪˌspəʊzəbl ˈɪnkʌm/", "meaning": "thu nhập khả dụng (sau thuế và chi phí thiết yếu)", "example": "Young people tend to spend their disposable income on experiences." },
-        { "word": "job security", "type": "n", "ipa": "/ˈdʒɒb sɪˌkjʊərəti/", "meaning": "sự ổn định nghề nghiệp", "example": "Many people value job security over a high salary." }
+        {
+          "word": "remuneration",
+          "type": "n",
+          "ipa": "/rɪˌmjuːnəˈreɪʃn/",
+          "meaning": "thù lao, tiền công",
+          "example": "The job offers excellent remuneration and benefits.",
+          "collocations": [
+            "a remuneration package",
+            "generous remuneration"
+          ]
+        },
+        {
+          "word": "work-life balance",
+          "type": "n",
+          "ipa": "/ˌwɜːk laɪf ˈbæləns/",
+          "meaning": "cân bằng công việc và cuộc sống",
+          "example": "Flexible hours help employees maintain a healthy work-life balance.",
+          "collocations": [
+            "maintain a work-life balance",
+            "a healthy work-life balance"
+          ]
+        },
+        {
+          "word": "redundant",
+          "type": "adj",
+          "ipa": "/rɪˈdʌndənt/",
+          "meaning": "bị sa thải (do dư thừa nhân sự)",
+          "example": "Hundreds of workers were made redundant when the factory closed.",
+          "collocations": [
+            "be made redundant",
+            "redundant workers"
+          ]
+        },
+        {
+          "word": "entrepreneur",
+          "type": "n",
+          "ipa": "/ˌɒntrəprəˈnɜː(r)/",
+          "meaning": "doanh nhân khởi nghiệp",
+          "example": "Young entrepreneurs are driving the startup scene in Hanoi.",
+          "collocations": [
+            "a successful entrepreneur",
+            "budding entrepreneurs"
+          ]
+        },
+        {
+          "word": "inflation",
+          "type": "n",
+          "ipa": "/ɪnˈfleɪʃn/",
+          "meaning": "lạm phát",
+          "example": "Rising inflation has reduced people's purchasing power.",
+          "collocations": [
+            "rising inflation",
+            "curb inflation"
+          ]
+        },
+        {
+          "word": "burnout",
+          "type": "n",
+          "ipa": "/ˈbɜːnaʊt/",
+          "meaning": "kiệt sức vì công việc",
+          "example": "Long working hours often lead to employee burnout.",
+          "collocations": [
+            "suffer from burnout",
+            "employee burnout"
+          ]
+        },
+        {
+          "word": "telecommute",
+          "type": "v",
+          "ipa": "/ˈtelikəmjuːt/",
+          "meaning": "làm việc từ xa",
+          "example": "More companies now allow staff to telecommute several days a week.",
+          "collocations": [
+            "telecommute from home",
+            "the option to telecommute"
+          ]
+        },
+        {
+          "word": "disposable income",
+          "type": "n",
+          "ipa": "/dɪˌspəʊzəbl ˈɪnkʌm/",
+          "meaning": "thu nhập khả dụng (sau thuế và chi phí thiết yếu)",
+          "example": "Young people tend to spend their disposable income on experiences.",
+          "collocations": [
+            "higher disposable income",
+            "spend disposable income on"
+          ]
+        },
+        {
+          "word": "job security",
+          "type": "n",
+          "ipa": "/ˈdʒɒb sɪˌkjʊərəti/",
+          "meaning": "sự ổn định nghề nghiệp",
+          "example": "Many people value job security over a high salary.",
+          "collocations": [
+            "lack of job security",
+            "value job security"
+          ]
+        }
       ]
     },
     {
@@ -85,15 +535,382 @@
       "name": "Society",
       "icon": "🏙️",
       "words": [
-        { "word": "urbanisation", "type": "n", "ipa": "/ˌɜːbənaɪˈzeɪʃn/", "meaning": "đô thị hoá", "example": "Rapid urbanisation has put pressure on housing and transport." },
-        { "word": "inequality", "type": "n", "ipa": "/ˌɪnɪˈkwɒləti/", "meaning": "sự bất bình đẳng", "example": "The gap between rich and poor reflects growing income inequality." },
-        { "word": "ageing population", "type": "n", "ipa": "/ˌeɪdʒɪŋ ˌpɒpjuˈleɪʃn/", "meaning": "dân số già hoá", "example": "Japan faces serious challenges from its ageing population." },
-        { "word": "welfare", "type": "n", "ipa": "/ˈwelfeə(r)/", "meaning": "phúc lợi xã hội", "example": "The government spends billions on social welfare programmes." },
-        { "word": "integrate", "type": "v", "ipa": "/ˈɪntɪɡreɪt/", "meaning": "hoà nhập", "example": "Language classes help immigrants integrate into society." },
-        { "word": "gender equality", "type": "n", "ipa": "/ˌdʒendər iˈkwɒləti/", "meaning": "bình đẳng giới", "example": "The country has made progress towards gender equality in the workplace." },
-        { "word": "consumerism", "type": "n", "ipa": "/kənˈsjuːmərɪzəm/", "meaning": "chủ nghĩa tiêu dùng", "example": "Advertising fuels consumerism among young people." },
-        { "word": "infrastructure", "type": "n", "ipa": "/ˈɪnfrəstrʌktʃə(r)/", "meaning": "cơ sở hạ tầng", "example": "The city is investing heavily in public transport infrastructure." },
-        { "word": "cohesion", "type": "n", "ipa": "/kəʊˈhiːʒn/", "meaning": "sự gắn kết (xã hội)", "example": "Community events strengthen social cohesion in the neighbourhood." }
+        {
+          "word": "urbanisation",
+          "type": "n",
+          "ipa": "/ˌɜːbənaɪˈzeɪʃn/",
+          "meaning": "đô thị hoá",
+          "example": "Rapid urbanisation has put pressure on housing and transport.",
+          "collocations": [
+            "rapid urbanisation",
+            "the pace of urbanisation"
+          ]
+        },
+        {
+          "word": "inequality",
+          "type": "n",
+          "ipa": "/ˌɪnɪˈkwɒləti/",
+          "meaning": "sự bất bình đẳng",
+          "example": "The gap between rich and poor reflects growing income inequality.",
+          "collocations": [
+            "income inequality",
+            "widening inequality"
+          ]
+        },
+        {
+          "word": "ageing population",
+          "type": "n",
+          "ipa": "/ˌeɪdʒɪŋ ˌpɒpjuˈleɪʃn/",
+          "meaning": "dân số già hoá",
+          "example": "Japan faces serious challenges from its ageing population.",
+          "collocations": [
+            "an ageing population",
+            "cope with an ageing population"
+          ]
+        },
+        {
+          "word": "welfare",
+          "type": "n",
+          "ipa": "/ˈwelfeə(r)/",
+          "meaning": "phúc lợi xã hội",
+          "example": "The government spends billions on social welfare programmes.",
+          "collocations": [
+            "social welfare",
+            "the welfare state"
+          ]
+        },
+        {
+          "word": "integrate",
+          "type": "v",
+          "ipa": "/ˈɪntɪɡreɪt/",
+          "meaning": "hoà nhập",
+          "example": "Language classes help immigrants integrate into society.",
+          "collocations": [
+            "integrate into society",
+            "fully integrate"
+          ]
+        },
+        {
+          "word": "gender equality",
+          "type": "n",
+          "ipa": "/ˌdʒendər iˈkwɒləti/",
+          "meaning": "bình đẳng giới",
+          "example": "The country has made progress towards gender equality in the workplace.",
+          "collocations": [
+            "promote gender equality",
+            "achieve gender equality"
+          ]
+        },
+        {
+          "word": "consumerism",
+          "type": "n",
+          "ipa": "/kənˈsjuːmərɪzəm/",
+          "meaning": "chủ nghĩa tiêu dùng",
+          "example": "Advertising fuels consumerism among young people.",
+          "collocations": [
+            "rampant consumerism",
+            "a culture of consumerism"
+          ]
+        },
+        {
+          "word": "infrastructure",
+          "type": "n",
+          "ipa": "/ˈɪnfrəstrʌktʃə(r)/",
+          "meaning": "cơ sở hạ tầng",
+          "example": "The city is investing heavily in public transport infrastructure.",
+          "collocations": [
+            "transport infrastructure",
+            "invest in infrastructure"
+          ]
+        },
+        {
+          "word": "cohesion",
+          "type": "n",
+          "ipa": "/kəʊˈhiːʒn/",
+          "meaning": "sự gắn kết (xã hội)",
+          "example": "Community events strengthen social cohesion in the neighbourhood.",
+          "collocations": [
+            "social cohesion",
+            "strengthen cohesion"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "writing-task1",
+      "name": "Writing Task 1",
+      "icon": "📈",
+      "words": [
+        {
+          "word": "fluctuate",
+          "type": "v",
+          "ipa": "/ˈflʌktʃueɪt/",
+          "meaning": "dao động, lên xuống thất thường",
+          "example": "Oil prices fluctuated wildly throughout the decade.",
+          "collocations": [
+            "fluctuate wildly",
+            "fluctuate between X and Y"
+          ]
+        },
+        {
+          "word": "surge",
+          "type": "n",
+          "ipa": "/sɜːdʒ/",
+          "meaning": "sự tăng vọt",
+          "example": "There was a sudden surge in car ownership after 2000.",
+          "collocations": [
+            "a sudden surge in",
+            "surge dramatically"
+          ]
+        },
+        {
+          "word": "plummet",
+          "type": "v",
+          "ipa": "/ˈplʌmɪt/",
+          "meaning": "giảm mạnh, lao dốc",
+          "example": "Sales plummeted from 5,000 to just 1,200 units.",
+          "collocations": [
+            "plummet sharply",
+            "plummet to a low of"
+          ]
+        },
+        {
+          "word": "peak",
+          "type": "v",
+          "ipa": "/piːk/",
+          "meaning": "đạt đỉnh",
+          "example": "Unemployment peaked at 12% in 2009.",
+          "collocations": [
+            "peak at",
+            "reach a peak of"
+          ]
+        },
+        {
+          "word": "plateau",
+          "type": "v",
+          "ipa": "/ˈplætəʊ/",
+          "meaning": "chững lại, đi ngang",
+          "example": "Growth plateaued at around 3% for the rest of the period.",
+          "collocations": [
+            "reach a plateau",
+            "plateau at"
+          ]
+        },
+        {
+          "word": "account for",
+          "type": "phrase",
+          "ipa": "/əˈkaʊnt fɔː(r)/",
+          "meaning": "chiếm (tỷ lệ)",
+          "example": "Renewable sources accounted for 40% of total energy production.",
+          "collocations": [
+            "account for X percent of",
+            "account for the majority of"
+          ]
+        },
+        {
+          "word": "proportion",
+          "type": "n",
+          "ipa": "/prəˈpɔːʃn/",
+          "meaning": "tỷ lệ, phần",
+          "example": "A large proportion of respondents preferred working from home.",
+          "collocations": [
+            "a large proportion of",
+            "in proportion to"
+          ]
+        },
+        {
+          "word": "respectively",
+          "type": "adv",
+          "ipa": "/rɪˈspektɪvli/",
+          "meaning": "lần lượt, theo thứ tự đó",
+          "example": "Figures for men and women were 45% and 55% respectively.",
+          "collocations": [
+            "X and Y respectively"
+          ]
+        },
+        {
+          "word": "twofold",
+          "type": "adv",
+          "ipa": "/ˈtuːfəʊld/",
+          "meaning": "gấp đôi",
+          "example": "The number of users increased twofold between 2015 and 2020.",
+          "collocations": [
+            "increase twofold",
+            "a twofold rise"
+          ]
+        },
+        {
+          "word": "upward trend",
+          "type": "n",
+          "ipa": "/ˌʌpwəd ˈtrend/",
+          "meaning": "xu hướng tăng",
+          "example": "The graph shows a steady upward trend in online shopping.",
+          "collocations": [
+            "a steady upward trend",
+            "follow an upward trend"
+          ]
+        },
+        {
+          "word": "outnumber",
+          "type": "v",
+          "ipa": "/ˌaʊtˈnʌmbə(r)/",
+          "meaning": "nhiều hơn về số lượng",
+          "example": "Female graduates outnumbered male graduates in every year shown.",
+          "collocations": [
+            "greatly outnumber",
+            "outnumber X by two to one"
+          ]
+        },
+        {
+          "word": "negligible",
+          "type": "adj",
+          "ipa": "/ˈneɡlɪdʒəbl/",
+          "meaning": "không đáng kể",
+          "example": "The difference between the two groups was negligible.",
+          "collocations": [
+            "a negligible amount",
+            "a negligible difference"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "writing-task2",
+      "name": "Writing Task 2",
+      "icon": "✍️",
+      "words": [
+        {
+          "word": "exacerbate",
+          "type": "v",
+          "ipa": "/ɪɡˈzæsəbeɪt/",
+          "meaning": "làm trầm trọng thêm",
+          "example": "Building more roads may exacerbate traffic congestion rather than solve it.",
+          "collocations": [
+            "exacerbate the problem",
+            "exacerbate the situation"
+          ]
+        },
+        {
+          "word": "alleviate",
+          "type": "v",
+          "ipa": "/əˈliːvieɪt/",
+          "meaning": "làm giảm nhẹ, xoa dịu",
+          "example": "Investing in public transport would alleviate pressure on city roads.",
+          "collocations": [
+            "alleviate poverty",
+            "alleviate the pressure on"
+          ]
+        },
+        {
+          "word": "controversial",
+          "type": "adj",
+          "ipa": "/ˌkɒntrəˈvɜːʃl/",
+          "meaning": "gây tranh cãi",
+          "example": "Whether governments should censor the Internet is a highly controversial issue.",
+          "collocations": [
+            "a highly controversial issue",
+            "remain controversial"
+          ]
+        },
+        {
+          "word": "viable",
+          "type": "adj",
+          "ipa": "/ˈvaɪəbl/",
+          "meaning": "khả thi",
+          "example": "Cycling is a viable alternative to driving in many cities.",
+          "collocations": [
+            "a viable solution",
+            "a viable alternative to"
+          ]
+        },
+        {
+          "word": "implement",
+          "type": "v",
+          "ipa": "/ˈɪmplɪment/",
+          "meaning": "thực thi, triển khai",
+          "example": "The government should implement stricter environmental regulations.",
+          "collocations": [
+            "implement a policy",
+            "implement measures"
+          ]
+        },
+        {
+          "word": "pose",
+          "type": "v",
+          "ipa": "/pəʊz/",
+          "meaning": "gây ra, đặt ra (mối đe doạ, thách thức)",
+          "example": "Air pollution poses a serious threat to public health.",
+          "collocations": [
+            "pose a threat to",
+            "pose a challenge"
+          ]
+        },
+        {
+          "word": "detrimental",
+          "type": "adj",
+          "ipa": "/ˌdetrɪˈmentl/",
+          "meaning": "có hại",
+          "example": "Excessive screen time is detrimental to children's development.",
+          "collocations": [
+            "detrimental to health",
+            "have a detrimental effect on"
+          ]
+        },
+        {
+          "word": "imperative",
+          "type": "adj",
+          "ipa": "/ɪmˈperətɪv/",
+          "meaning": "cấp thiết, bắt buộc",
+          "example": "It is imperative that governments act now to address climate change.",
+          "collocations": [
+            "it is imperative that",
+            "an economic imperative"
+          ]
+        },
+        {
+          "word": "profound",
+          "type": "adj",
+          "ipa": "/prəˈfaʊnd/",
+          "meaning": "sâu sắc",
+          "example": "Technology has had a profound impact on the way we communicate.",
+          "collocations": [
+            "a profound impact on",
+            "profound changes"
+          ]
+        },
+        {
+          "word": "mitigate",
+          "type": "v",
+          "ipa": "/ˈmɪtɪɡeɪt/",
+          "meaning": "giảm thiểu (tác hại)",
+          "example": "Planting trees helps mitigate the effects of urban heat.",
+          "collocations": [
+            "mitigate the effects of",
+            "mitigate the risk"
+          ]
+        },
+        {
+          "word": "compelling",
+          "type": "adj",
+          "ipa": "/kəmˈpelɪŋ/",
+          "meaning": "thuyết phục, hấp dẫn",
+          "example": "There is a compelling argument for investing in early education.",
+          "collocations": [
+            "a compelling argument",
+            "compelling evidence"
+          ]
+        },
+        {
+          "word": "allocate",
+          "type": "v",
+          "ipa": "/ˈæləkeɪt/",
+          "meaning": "phân bổ",
+          "example": "More funds should be allocated to preventive healthcare.",
+          "collocations": [
+            "allocate resources",
+            "allocate funds to"
+          ]
+        }
       ]
     }
   ]
