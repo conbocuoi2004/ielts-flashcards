@@ -229,3 +229,26 @@ select.finput { cursor: pointer; }
   border-radius: 20px; padding: 6px 14px; cursor: pointer;
 }
 .speak-btn:hover { color: var(--ink); border-color: var(--ink-dim); }
+
+/* ===== Thêm/sửa chủ đề ===== */
+.topic-add {
+  border-style: dashed !important;
+  border-color: #3d4b7d !important;
+  background: transparent !important;
+}
+.topic-add:hover { border-color: var(--gold) !important; }
+.topic-add .topic-icon { color: var(--gold); font-size: 22px; }
+
+.topic-edit {
+  position: absolute; bottom: 10px; right: 12px;
+  font-size: 13px; color: #59628a; cursor: pointer;
+  padding: 2px 6px; border-radius: 6px;
+}
+.topic-edit:hover { color: var(--gold); background: rgba(255,210,63,0.1); }
+
+.topic-form { cursor: default; display: flex; flex-direction: column; gap: 10px; }
+.topic-form .finput { background: var(--navy); padding: 9px 11px; font-size: 13.5px; }
+.ficon { max-width: 58px; text-align: center; font-size: 17px; }
+.topic-form .form-actions { flex-wrap: wrap; gap: 6px; }
+.btn.tdel { border-color: rgba(255,107,94,0.5); color: var(--coral); margin-left: auto; }
+.btn.tdel:hover { background: rgba(255,107,94,0.1); }

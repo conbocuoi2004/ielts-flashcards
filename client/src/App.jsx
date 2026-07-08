@@ -151,6 +151,31 @@ function WordForm({ initial, topics, onSave, onCancel }) {
   );
 }
 
+/* ---------- Form thêm/sửa chủ đề ---------- */
+function TopicForm({ initial, onSave, onDelete, onCancel }) {
+  const [icon, setIcon] = useState(initial?.icon || "📚");
+  const [name, setName] = useState(initial?.name || "");
+  const ref = useRef(null);
+  useEffect(() => ref.current?.focus(), []);
+  return (
+    <div className="topic-card topic-form">
+      <div className="form-row">
+        <input className="finput ficon" value={icon} maxLength={4}
+          onChange={(e) => setIcon(e.target.value)} aria-label="Biểu tượng emoji" />
+        <input ref={ref} className="finput" value={name} placeholder="Tên chủ đề, vd: Crime"
+          onChange={(e) => setName(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && name.trim() && onSave({ name: name.trim(), icon: icon.trim() || "📚" })} />
+      </div>
+      <div className="form-actions">
+        <button className="btn primary small" disabled={!name.trim()}
+          onClick={() => onSave({ name: name.trim(), icon: icon.trim() || "📚" })}>Lưu</button>
+        <button className="btn small" onClick={onCancel}>Huỷ</button>
+        {onDelete && <button className="btn small tdel" onClick={onDelete}>Xoá chủ đề</button>}
+      </div>
+    </div>
+  );
+}
+
 /* ---------- Phiên học ---------- */
 function StudySession({ words, onRate, onExit }) {
   const [queue, setQueue] = useState(() => shuffle(words));
@@ -234,6 +259,8 @@ export default function App() {
   const [query, setQuery] = useState("");
   const [adding, setAdding] = useState(false);
   const [editing, setEditing] = useState(null); // {topicId, uid}
+  const [addingTopic, setAddingTopic] = useState(false);
+  const [editingTopic, setEditingTopic] = useState(null); // topicId
 
   useEffect(() => {
     const local = loadLocal();
@@ -319,6 +346,25 @@ export default function App() {
     });
   }
 
+
+  function addTopic(f) {
+    save({ topics: [...data.topics, { id: makeId(), name: f.name, icon: f.icon, words: [] }] });
+    setAddingTopic(false);
+  }
+
+  function updateTopic(id, f) {
+    save({ topics: data.topics.map((t) => (t.id === id ? { ...t, name: f.name, icon: f.icon } : t)) });
+    setEditingTopic(null);
+  }
+
+  function deleteTopic(id) {
+    const t = data.topics.find((x) => x.id === id);
+    if (!t) return;
+    if (!window.confirm(`Xoá chủ đề "${t.name}"?` + (t.words.length ? `\nToàn bộ ${t.words.length} từ trong đó sẽ mất.` : ""))) return;
+    save({ topics: data.topics.filter((x) => x.id !== id) });
+    setEditingTopic(null);
+  }
+
   function resetAll() {
     if (!window.confirm("Khôi phục bộ từ gốc? Từ tự thêm và toàn bộ tiến độ học sẽ mất.")) return;
     localStorage.removeItem(STORAGE_KEY);
@@ -398,6 +444,14 @@ export default function App() {
       <h2 className="section-title">Theo chủ đề</h2>
       <div className="topic-grid">
         {data.topics.map((t) => {
+          if (editingTopic === t.id) {
+            return (
+              <TopicForm key={t.id} initial={t}
+                onSave={(f) => updateTopic(t.id, f)}
+                onDelete={() => deleteTopic(t.id)}
+                onCancel={() => setEditingTopic(null)} />
+            );
+          }
           const due = dueWords.filter((w) => w.topicId === t.id).length;
           return (
             <button className="topic-card" key={t.id} onClick={() => startSession(t.id)}>
@@ -405,9 +459,21 @@ export default function App() {
               <span className="topic-name">{t.name}</span>
               <span className="topic-meta">{t.words.length} từ{due ? ` · ${due} đến hạn` : ""}</span>
               {due > 0 && <span className="due-dot">{due}</span>}
+              <span className="topic-edit" role="button" tabIndex={0} aria-label="Sửa chủ đề"
+                onClick={(e) => { e.stopPropagation(); setEditingTopic(t.id); }}
+                onKeyDown={(e) => { if (e.key === "Enter") { e.stopPropagation(); setEditingTopic(t.id); } }}>✎</span>
             </button>
           );
         })}
+        {addingTopic ? (
+          <TopicForm onSave={addTopic} onCancel={() => setAddingTopic(false)} />
+        ) : (
+          <button className="topic-card topic-add" onClick={() => setAddingTopic(true)}>
+            <span className="topic-icon">＋</span>
+            <span className="topic-name">Thêm chủ đề</span>
+            <span className="topic-meta">tạo bộ từ riêng của bạn</span>
+          </button>
+        )}
       </div>
 
       <p className="foot-note">Tiến độ học lưu trên máy bạn · lặp lại ngắt quãng 1→3→7→14 ngày</p>
