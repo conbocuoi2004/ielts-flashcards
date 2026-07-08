@@ -1,0 +1,52 @@
+name: Build Desktop App (Windows)
+
+on:
+  workflow_dispatch: {}        # cho phép bấm nút chạy tay trong tab Actions
+  push:
+    tags: ["v*"]               # hoặc tự chạy khi push tag, vd: v1.0.0
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    permissions:
+      contents: write          # để tạo Release khi push tag
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build frontend
+        shell: bash
+        working-directory: client
+        run: |
+          npm install
+          npm run build
+
+      - name: Gom file vào desktop/
+        shell: bash
+        run: |
+          rm -rf desktop/public desktop/data
+          cp -r client/dist desktop/public
+          cp -r server/data desktop/data
+
+      - name: Build file .exe bằng electron-builder
+        shell: bash
+        working-directory: desktop
+        run: |
+          npm install
+          npm run dist:win
+
+      - name: Upload artifact (tải trong tab Actions)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ielts-flashcards-windows
+          path: |
+            desktop/dist/*.exe
+
+      - name: Tạo GitHub Release (chỉ khi push tag)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: desktop/dist/*.exe

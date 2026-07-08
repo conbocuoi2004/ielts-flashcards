@@ -1,0 +1,13 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+# Khi tạo service bằng "New > Blueprint", Render đọc file này và tự cấu hình.
+services:
+  - type: web
+    name: ielts-flashcards
+    runtime: docker
+    plan: free              # đổi thành starter nếu không muốn app "ngủ" khi rảnh
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    autoDeploy: true        # tự deploy mỗi lần push lên branch chính
+    envVars:
+      - key: NODE_ENV
+        value: production

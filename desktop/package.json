@@ -1,0 +1,32 @@
+{
+  "name": "ielts-flashcards-desktop",
+  "productName": "IELTS Flashcards",
+  "version": "1.0.0",
+  "description": "Tra cứu nhanh từ vựng IELTS — bản desktop offline",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win --publish never"
+  },
+  "devDependencies": {
+    "electron": "^31.3.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.ielts.flashcards",
+    "productName": "IELTS Flashcards",
+    "files": ["main.js", "public/**/*", "data/**/*"],
+    "win": {
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ]
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "deleteAppDataOnUninstall": true
+    }
+  }
+}

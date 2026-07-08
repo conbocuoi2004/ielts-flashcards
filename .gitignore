@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.env
+*.log
+.DS_Store
+server/public/
+desktop/node_modules/
+desktop/public/
+desktop/data/
+desktop/dist/
