@@ -30,13 +30,13 @@ jobs:
           npm ci
           npm run build
 
-      - name: Kiểm tra backend khởi động được
+      - name: Kiểm tra backend
         working-directory: server
         run: |
           npm ci
           node --check index.js
 
-  # ---------- 2. Build & push Docker image (chỉ khi push lên main) ----------
+  # ---------- 2. Build & push image lên GHCR ----------
   docker:
     needs: build
     if: github.event_name == 'push'
@@ -44,6 +44,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+
     steps:
       - uses: actions/checkout@v4
 
@@ -56,7 +57,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build & push
+      - name: Build & push GHCR
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -67,3 +68,44 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+  # ---------- 3. Đồng bộ image sang Harbor + deploy trên AWS ----------
+  harbor-deploy:
+    needs: docker
+    if: github.event_name == 'push'
+    runs-on: self-hosted
+    permissions:
+      contents: read
+      packages: read
+
+    steps:
+      - name: Đăng nhập GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Đăng nhập Harbor
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.HARBOR_REGISTRY }}
+          username: ${{ secrets.HARBOR_USERNAME }}
+          password: ${{ secrets.HARBOR_PASSWORD }}
+
+      - name: Pull từ GHCR và push sang Harbor
+        env:
+          HARBOR_IMAGE: ${{ secrets.HARBOR_REGISTRY }}/${{ secrets.HARBOR_PROJECT }}/ielts-flashcards
+        run: |
+          docker pull "${IMAGE}:${GITHUB_SHA}"
+          docker tag "${IMAGE}:${GITHUB_SHA}" "${HARBOR_IMAGE}:${GITHUB_SHA}"
+          docker tag "${IMAGE}:${GITHUB_SHA}" "${HARBOR_IMAGE}:latest"
+          docker push "${HARBOR_IMAGE}:${GITHUB_SHA}"
+          docker push "${HARBOR_IMAGE}:latest"
+
+      - name: Deploy trên AWS EC2
+        run: |
+          cd ~/ielts-flashcards
+          docker compose pull
+          docker compose up -d
+          docker image prune -f
+          curl --fail --retry 10 --retry-delay 3 http://localhost:8080/api/health
