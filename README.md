@@ -24,3 +24,4 @@ cd client && npm install && npm run dev   # → http://localhost:5173
 ## Thêm từ vào bộ khởi tạo
 
 Sửa `server/data/words.json`. Lưu ý: người dùng đã mở app rồi thì dữ liệu nằm trong localStorage của họ — bấm nút ↺ (khôi phục gốc) mới nhận bộ từ mới.
+
