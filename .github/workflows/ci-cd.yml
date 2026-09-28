@@ -68,4 +68,20 @@ jobs:
           docker compose pull
           docker compose up -d
           docker image prune -f
-          curl --fail --retry 10 --retry-delay 3 http://localhost:8080/api/health
+
+          echo "Waiting for application health..."
+          for i in {1..20}; do
+            if curl --fail --silent --show-error http://localhost:8080/api/health; then
+              echo
+              echo "Application is healthy"
+              exit 0
+            fi
+
+            echo "Health check attempt $i/20 failed, retrying in 3s..."
+            sleep 3
+          done
+
+          echo "Application did not become healthy in time"
+          docker compose ps
+          docker compose logs --tail=100
+          exit 1
