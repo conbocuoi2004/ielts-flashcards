@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { createStateSync, stateRequest } from "./state-client.js";
 
 const STORAGE_KEY = "ielts-flashcards-v1";
 const SETTINGS_KEY = "ielts-settings-v1";
+const RECOVERY_KEY = "ielts-flashcards-recovery-v1";
 const DEFAULT_SETTINGS = {
   overall: 6.5, listening: 6.5, reading: 6.5, writing: 6.0, speaking: 6.0,
   dailyGoal: 20,
@@ -358,6 +360,12 @@ export default function App() {
   const [addingTopic, setAddingTopic] = useState(false);
   const [editingTopic, setEditingTopic] = useState(null); // topicId
   const [settings, setSettings] = useState(loadSettings);
+  const [syncStatus, setSyncStatus] = useState("");
+  const [syncError, setSyncError] = useState(null);
+  const [ready, setReady] = useState(false);
+  const syncRef = useRef(null);
+  const initRef = useRef(null);
+  const savedSnapshot = useRef("");
 
   function saveSettings(next) {
     setSettings(next);
@@ -375,17 +383,75 @@ export default function App() {
   }
 
   useEffect(() => {
-    const local = loadLocal();
-    if (local?.topics?.length) { setData(local); return; }
-    fetch("/api/all")
-      .then((r) => r.json())
-      .then((raw) => {
-        const s = seed(raw);
-        setData(s);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
-      })
-      .catch(() => setError("Không kết nối được server để lấy bộ từ khởi tạo."));
+    let cancelled = false;
+    // Share initialization across React StrictMode's effect replay.
+    initRef.current ||= (async () => {
+      const health = await stateRequest("/api/health");
+      const local = loadLocal();
+      if (health.database !== "postgresql") {
+        // The packaged Electron app uses its own offline server.
+        const data = local?.topics ? local : seed(await stateRequest("/api/all"));
+        return { state: { data, settings: loadSettings() }, desktop: true };
+      }
+      return stateRequest("/api/state/init", {
+        method: "POST",
+        body: JSON.stringify({ legacy: local?.topics ? { data: local, settings: loadSettings() } : null }),
+      });
+    })();
+    initRef.current.then((result) => {
+      if (cancelled) return;
+      const { state } = result;
+      const local = loadLocal();
+      if (!result.desktop && local && JSON.stringify(local) !== JSON.stringify(state.data)) {
+        try { localStorage.setItem(RECOVERY_KEY, JSON.stringify({ data: local, settings: loadSettings() })); } catch {}
+      }
+      savedSnapshot.current = JSON.stringify(state);
+      if (!result.desktop) {
+        syncRef.current = createStateSync(result.revision, (status, err) => {
+          setSyncStatus(status);
+          setSyncError(err);
+        });
+      }
+      setData(state.data);
+      setSettings(state.settings);
+      setSyncStatus(result.desktop ? "Đã lưu trên máy" : "Đã lưu vào database");
+      setReady(true);
+    }).catch((err) => {
+      if (!cancelled) setError(err.message || "Không kết nối được server. Dữ liệu cũ trên máy vẫn được giữ.");
+    });
+    return () => { cancelled = true; };
   }, []);
+
+  useEffect(() => {
+    if (!ready || !data) return;
+    const state = { data, settings };
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+    } catch {
+      setSyncError("Không tạo được bản lưu trên máy. Hãy chờ trạng thái đã lưu vào database trước khi đóng trang.");
+    }
+    const serialized = JSON.stringify(state);
+    if (serialized === savedSnapshot.current) return;
+    savedSnapshot.current = serialized;
+    syncRef.current?.enqueue(state);
+  }, [data, settings, ready]);
+
+  function downloadBackup() {
+    const content = JSON.stringify({ data, settings }, null, 2);
+    const url = URL.createObjectURL(new Blob([content], { type: "application/json" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "flashcards-backup.json";
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  const syncNotice = (
+    <div role="status" className={`sync-notice ${syncError ? "sync-warning" : ""}`}>
+      {syncStatus}{syncError && <> · {syncError} <button className="btn small" onClick={() => syncRef.current?.retry()}>Thử lại</button> <button className="btn small" onClick={downloadBackup}>Tải bản sao</button></>}
+    </div>
+  );
 
   function save(next) {
     setData(next);
@@ -480,8 +546,7 @@ export default function App() {
 
   function resetAll() {
     if (!window.confirm("Khôi phục bộ từ gốc? Từ tự thêm và toàn bộ tiến độ học sẽ mất.")) return;
-    localStorage.removeItem(STORAGE_KEY);
-    fetch("/api/all").then((r) => r.json()).then((raw) => save(seed(raw)))
+    stateRequest("/api/all").then((raw) => save(seed(raw)))
       .catch(() => setError("Không tải được bộ từ gốc."));
   }
 
@@ -491,6 +556,7 @@ export default function App() {
   if (view === "study") {
     return (
       <div className="wrap">
+        {syncNotice}
         <StudySession words={session} onRate={rateWord} onExit={() => setView("home")} />
       </div>
     );
@@ -501,6 +567,7 @@ export default function App() {
     const list = allWords.filter((w) => !q || w.word.toLowerCase().includes(q) || w.meaning.toLowerCase().includes(q));
     return (
       <div className="wrap">
+        {syncNotice}
         <header className="bar">
           <button className="btn small" onClick={() => { setView("home"); setQuery(""); setAdding(false); setEditing(null); }}>← Trang chính</button>
           <h1 className="bar-title">Kho từ vựng</h1>
@@ -563,6 +630,7 @@ export default function App() {
 
   return (
     <div className="wrap wide">
+      {syncNotice}
       <header className="home-head">
         <h1 className="logo">IELTS<span>Flashcards</span></h1>
         <div className="head-actions">
@@ -611,7 +679,7 @@ export default function App() {
         </aside>
       </div>
 
-      <p className="foot-note">Tiến độ học lưu trên máy bạn · lặp lại ngắt quãng 1→3→7→14 ngày</p>
+      <p className="foot-note">Từ vựng và tiến độ được tự động lưu · lặp lại ngắt quãng 1→3→7→14 ngày</p>
     </div>
   );
 }

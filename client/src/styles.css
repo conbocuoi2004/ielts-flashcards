@@ -318,3 +318,6 @@ select.finput { cursor: pointer; }
   .home-grid { grid-template-columns: 1fr; }
   .home-side { position: static; order: -1; } /* mobile: mục tiêu lên đầu */
 }
+
+.sync-notice { font-size: .85rem; color: #8ba5a0; margin-bottom: 12px; }
+.sync-warning { color: #ffd58a; padding: 12px; border: 1px solid #796139; border-radius: 8px; }

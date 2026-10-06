@@ -5,11 +5,18 @@
   "private": true,
   "scripts": {
     "start": "node index.js",
-    "dev": "node --watch index.js"
+    "dev": "node --env-file=../.env --watch index.js",
+    "test": "node --test test/*.test.js ../client/src/state-client.test.js"
   },
   "dependencies": {
     "compression": "^1.7.4",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "pg": "^8.23.1"
   },
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8"
+  }
 }

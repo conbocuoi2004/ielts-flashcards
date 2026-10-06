@@ -14,6 +14,18 @@ jobs:
   # ---------- 1. CI: build & kiểm tra ----------
   build:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: flashcards_test
+          POSTGRES_USER: flashcards
+          POSTGRES_PASSWORD: test-only-password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U flashcards -d flashcards_test"
+          --health-interval 5s --health-timeout 3s --health-retries 10
     steps:
       - uses: actions/checkout@v4
 
@@ -27,11 +39,14 @@ jobs:
           npm ci
           npm run build
 
-      - name: Check backend
+      - name: Check backend and database persistence
         working-directory: server
+        env:
+          DATABASE_URL: postgresql://flashcards:test-only-password@localhost:5432/flashcards_test
         run: |
           npm ci
           node --check index.js
+          npm test
 
   # ---------- 2. CD: build image, push Harbor, deploy trên AWS ----------
   deploy:
@@ -63,10 +78,16 @@ jobs:
           docker push "${HARBOR_IMAGE}:latest"
 
       - name: Deploy from Harbor
+        env:
+          APP_IMAGE: ${{ secrets.HARBOR_REGISTRY }}/${{ secrets.HARBOR_PROJECT }}/ielts-flashcards:${{ github.sha }}
         run: |
+          set -euo pipefail
           cd ~/ielts-flashcards
+          # Validate the required password before replacing the active Compose file.
+          docker compose --env-file .env -f "$GITHUB_WORKSPACE/docker-compose.yml" config --quiet
+          cp "$GITHUB_WORKSPACE/docker-compose.yml" docker-compose.yml
           docker compose pull
-          docker compose up -d
+          docker compose up -d --no-build
           docker image prune -f
 
           echo "Waiting for application health..."
