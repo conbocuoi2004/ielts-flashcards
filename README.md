@@ -12,7 +12,7 @@ docker compose up -d --build
 curl -f http://localhost:8080/api/health
 ```
 
-Open http://localhost:8080. PostgreSQL is internal to the Compose network; port 5432 is not published. Data lives in the named `postgres_data` volume. Restarting or recreating containers, and `docker compose down` without `-v`, preserve it. **Do not run `docker compose down -v` if you want to retain your data.**
+Open http://localhost:8080. PostgreSQL is available to the app on the Compose network and to SSH clients through server loopback `127.0.0.1:15432`. No database port is bound to a public interface. Data lives in the named `postgres_data` volume. Restarting or recreating containers, and `docker compose down` without `-v`, preserve it. **Do not run `docker compose down -v` if you want to retain your data.**
 
 Each browser has a separate learning profile identified by an HttpOnly cookie. On its first visit after this upgrade, existing `ielts-flashcards-v1` and `ielts-settings-v1` localStorage data are imported into that profile. Empty topic lists are imported too. Once a profile exists, the database is authoritative; old browser data does not overwrite it. A local backup is kept when editing, and failed saves display a retry notice. Wait for “Đã lưu vào database” before closing the page.
 
@@ -79,3 +79,7 @@ For Render, supply `DATABASE_URL` for an external PostgreSQL database when creat
 Edit `server/data/words.json` to change the seed for new profiles. Existing profiles keep their data; the ↺ action restores seed vocabulary for the current profile and resets word progress. IELTS targets are retained.
 
 The *Build Desktop App (Windows)* workflow packages the offline Electron app. Web PostgreSQL integration does not require PostgreSQL for that desktop build.
+
+## pgAdmin on Windows
+
+Install pgAdmin 4, then register a server named `Flashcards AWS`. Under Connection, use host `127.0.0.1`, port `15432`, maintenance database `flashcards`, username `flashcards` and the server's `POSTGRES_PASSWORD` from `~/ielts-flashcards/.env`. Under SSH Tunnel, enable tunneling, enter the AWS public IP/hostname, SSH port 22, your SSH username and the private key used to connect to that machine. No AWS inbound database rule is needed. Browse `Databases > flashcards > Schemas > public > Tables > flashcard_profiles` and open View/Edit Data or Query Tool. Vocabulary and goals are stored as JSONB in the `state` column.
