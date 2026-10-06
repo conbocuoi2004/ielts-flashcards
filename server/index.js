@@ -1,5 +1,8 @@
 import express from "express";
 import compression from "compression";
+import pg from "pg";
+import { createStateStore } from "./state-store.js";
+import { registerStateApi } from "./state-api.js";
 import path from "node:path";
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -11,14 +14,28 @@ const data = JSON.parse(
   fs.readFileSync(path.join(__dirname, "data", "words.json"), "utf-8")
 );
 
+if (!process.env.DATABASE_URL) throw new Error("DATABASE_URL is required. See .env.example and README.md.");
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL, connectionTimeoutMillis: 4000, query_timeout: 4000, statement_timeout: 4000 });
+pool.on("error", (err) => console.error("PostgreSQL connection error:", err.message));
+const store = createStateStore(pool, data);
+await store.migrate();
+
 const app = express();
+app.use(express.json({ limit: "10mb" }));
 app.use(compression());
 app.disable("x-powered-by");
 
 // Health check cho Docker/Render
-app.get("/api/health", (_req, res) => {
-  res.json({ status: "ok", uptime: process.uptime() });
+app.get("/api/health", async (_req, res) => {
+  res.set("Cache-Control", "no-store");
+  try {
+    await store.health();
+    res.json({ status: "ok", database: "postgresql", uptime: process.uptime() });
+  } catch {
+    res.status(503).json({ status: "error", database: "unavailable" });
+  }
 });
+registerStateApi(app, store);
 
 // Toàn bộ bộ từ khởi tạo — client seed vào localStorage lần đầu
 app.get("/api/all", (_req, res) => {
@@ -156,6 +173,16 @@ if (fs.existsSync(clientDist)) {
   });
 }
 
-app.listen(PORT, () => {
+app.use((err, _req, res, _next) => {
+  console.error("Request failed:", err.message);
+  const status = err.status === 413 ? 413 : err.status === 400 ? 400 : 503;
+  res.status(status).json({ error: status === 503 ? "Không kết nối được database. Dữ liệu trên máy vẫn được giữ; hãy thử lại." : "Dữ liệu gửi lên không hợp lệ hoặc quá lớn." });
+});
+
+const server = app.listen(PORT, () => {
   console.log(`✅ IELTS Flashcards chạy tại http://localhost:${PORT}`);
 });
+
+for (const signal of ["SIGTERM", "SIGINT"]) {
+  process.on(signal, () => server.close(async () => { await pool.end(); process.exit(0); }));
+}

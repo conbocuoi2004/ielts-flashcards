@@ -11,3 +11,7 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      - key: DATABASE_URL
+        sync: false          # Supply a PostgreSQL connection string before deployment.
+      - key: COOKIE_SECURE
+        value: true
