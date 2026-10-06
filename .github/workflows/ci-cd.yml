@@ -83,6 +83,12 @@ jobs:
         run: |
           set -euo pipefail
           cd ~/ielts-flashcards
+          # Preserve the existing deployment's Compose project and volume identities.
+          if docker inspect ielts-flashcards >/dev/null 2>&1; then
+            project=$(docker inspect --format '{{ index .Config.Labels "com.docker.compose.project" }}' ielts-flashcards)
+            if [ -n "$project" ]; then export COMPOSE_PROJECT_NAME="$project"; fi
+          fi
+          python3 "$GITHUB_WORKSPACE/scripts/init-deploy-env.py"
           # Validate the required password before replacing the active Compose file.
           docker compose --env-file .env -f "$GITHUB_WORKSPACE/docker-compose.yml" config --quiet
           cp "$GITHUB_WORKSPACE/docker-compose.yml" docker-compose.yml

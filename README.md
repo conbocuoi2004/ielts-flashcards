@@ -70,7 +70,7 @@ Tests verify migration, restart persistence, profile isolation, conflict rejecti
 
 ## CI/CD, Harbor and Render
 
-The existing workflow builds/tests pull requests. Merging to `main` triggers image build/push and deployment on the existing self-hosted runner. **Before the first upgraded deployment**, configure `POSTGRES_PASSWORD` in `~/ielts-flashcards/.env` on that runner and back up existing browser data. The workflow validates the Compose configuration, copies the updated file and deploys the immutable commit image with its PostgreSQL service. For manual Harbor deployment set `APP_IMAGE` in `.env` to the image tag, then run `docker compose pull && docker compose up -d --no-build`.
+The existing workflow builds/tests pull requests. Merging to `main` triggers image build/push and deployment on the existing self-hosted runner. On first deployment, the workflow generates a private random `POSTGRES_PASSWORD` in `~/ielts-flashcards/.env` if none is configured and no database volume exists. The file is readable only by its owner; the password is not logged. Existing passwords are retained. If a database volume exists but its password is missing, deployment stops so the original password can be restored. Back up existing browser data before the upgrade. The workflow validates the Compose configuration, copies the updated file and deploys the immutable commit image with its PostgreSQL service. For manual Harbor deployment set `APP_IMAGE` in `.env` to the image tag, then run `docker compose pull && docker compose up -d --no-build`.
 
 For Render, supply `DATABASE_URL` for an external PostgreSQL database when creating the Blueprint; no paid database is provisioned automatically.
 
